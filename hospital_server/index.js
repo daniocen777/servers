@@ -20,6 +20,8 @@ app.use(express.json());
 
 // Rutas
 app.use("/api/test", require("./rutas/pueba"));
+app.use("/api/usuarios", require("./rutas/usuario"));
+app.use("/api/login", require("./rutas/auth"));
 
 // Path público
 const publicPath = path.resolve(__dirname, "public");
