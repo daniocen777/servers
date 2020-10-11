@@ -16,12 +16,21 @@ const server = require("http").createServer(app);
 require("./database/config").dbConecction();
 
 // Lectura y parseo del body
-app.use(express.json());
+app.use( express.json() );
 
-// Rutas
+/* Rutas */
+// Usuarios
 app.use("/api/test", require("./rutas/pueba"));
 app.use("/api/usuarios", require("./rutas/usuario"));
 app.use("/api/login", require("./rutas/auth"));
+// Hospitales
+app.use("/api/hospitales", require("./rutas/hospitales"));
+// Médicos
+app.use("/api/medicos", require("./rutas/medicos"));
+// Búsquedas
+app.use("/api/todo", require("./rutas/busquedas"));
+// Subir archivo
+app.use("/api/upload", require("./rutas/uploads"));
 
 // Path público
 const publicPath = path.resolve(__dirname, "public");

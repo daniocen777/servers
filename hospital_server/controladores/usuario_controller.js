@@ -10,7 +10,8 @@ class UsuarioController {
   }
 
   async usuariosLista(req = request, res = response) {
-    let respuesta = await usuarioDA.usuariosLista();
+    const desde = Number(req.query.desde) || 0;
+    let respuesta = await usuarioDA.usuariosLista(desde);
     return res.status(respuesta.status).json(respuesta);
   }
 

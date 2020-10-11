@@ -20,19 +20,32 @@ class UsuarioDataAccess {
       const salt = bcrypt.genSaltSync();
       usuarioACrear.password = bcrypt.hashSync(usuarioACrear.password, salt);
       await usuarioACrear.save();
-      return funciones.responderOK("usuario creado", 201, {
+      // Generar token
+      const token = await funciones.generarJWT(usuarioACrear.id);
+      return funciones.responderOK("usuario creado", 200, {
         usuario: usuarioACrear,
+        token,
       });
     } catch (error) {
       return funciones.responderError("Error de servidor", 500, error);
     }
   }
 
-  async usuariosLista() {
+  async usuariosLista(desde) {
     try {
-      const usuarios = await Usuario.find();
+      /* const usuarios = await Usuario.find({}, "nombre email rol google")
+        .skip(desde)
+        .limit(5);
+      const total = await Usuario.count(); */
+
+      const [usuarios, total] = await Promise.all([
+        Usuario.find({}, "nombre email rol google img").skip(desde).limit(5),
+        Usuario.countDocuments(),
+      ]);
+
       return funciones.responderOK("usuarios", 200, {
         usuarios,
+        total,
       });
     } catch (error) {
       return funciones.responderError("Error de servidor", 500, error);
