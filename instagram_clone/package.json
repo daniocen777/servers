@@ -1,0 +1,16 @@
+{
+  "name": "instagram_clone",
+  "version": "1.0.0",
+  "description": "Servidor de la app del clon de Instagram",
+  "main": "index.js",
+  "scripts": {
+    "dev": "node ./index.js"
+  },
+  "author": "Danicode",
+  "license": "ISC",
+  "dependencies": {
+    "apollo-server": "^2.19.0",
+    "dotenv": "^8.2.0",
+    "mongoose": "^5.10.14"
+  }
+}
