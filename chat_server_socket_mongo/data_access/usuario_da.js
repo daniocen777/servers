@@ -25,8 +25,8 @@ class UsuarioDataAccess {
       await usuarioACrear.save();
       // Generar token
       const token = await funciones.generarJWT(usuarioACrear.id);
-      return funciones.responderOK("usuario creado", {
-        usuarioACrear,
+      return funciones.responderOK("El usuario fue creado", {
+        usuario: usuarioACrear,
         token,
       });
     } catch (error) {
@@ -58,7 +58,7 @@ class UsuarioDataAccess {
       );
     }
   }
-  
+
   async renovarToken(uid) {
     const nuevoToken = await funciones.generarJWT(uid);
     try {
@@ -69,6 +69,17 @@ class UsuarioDataAccess {
       return funciones.responderOK("Token ronovado", {
         usuario,
         token: nuevoToken,
+      });
+    } catch (error) {
+      return funciones.responderError("Error al renovar token", error);
+    }
+  }
+
+  async getUsers() {
+    try {
+      const usuario = await Usuario.find();
+      return funciones.responderOK("Usuario encontrados", {
+        usuario,
       });
     } catch (error) {
       return funciones.responderError("Error al renovar token", error);

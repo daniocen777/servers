@@ -4,13 +4,15 @@
   "description": "Servidor de la app del clon de Instagram",
   "main": "index.js",
   "scripts": {
-    "dev": "node ./index.js"
+    "dev": "nodemon ./index.js"
   },
   "author": "Danicode",
   "license": "ISC",
   "dependencies": {
     "apollo-server": "^2.19.0",
+    "bcryptjs": "^2.4.3",
     "dotenv": "^8.2.0",
+    "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.10.14"
   }
 }

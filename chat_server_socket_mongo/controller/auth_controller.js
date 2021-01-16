@@ -20,6 +20,11 @@ class UserController {
     const respuesta = await usuarioDA.renovarToken(uid);
     return res.json(respuesta);
   }
+
+  async getUsers(req = request, res = response) {
+    const respuesta = await usuarioDA.getUsers();
+    return res.json(respuesta);
+  }
 }
 
 module.exports = UserController.prototype;

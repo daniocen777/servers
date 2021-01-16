@@ -37,4 +37,7 @@ router.post(
   userController.addUser
 );
 
+// Usuarios
+router.post("/get", userController.getUsers);
+
 module.exports = router;
