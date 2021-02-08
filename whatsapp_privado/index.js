@@ -12,7 +12,7 @@ const app = express();
 // Lectura y parseo del body
 app.use(express.json());
 
-// Node Server
+// Node Server - Socket
 const server = require("http").createServer(app);
 module.exports.io = require("socket.io")(server);
 require("./sockets/socket");
@@ -23,6 +23,8 @@ app.use(express.static(publicPath));
 
 // Rutas
 app.use("/api/login", require("./routes/auth"));
+app.use("/api/usuarios", require("./routes/usuarios"));
+app.use("/api/mensajes", require("./routes/mensajes"));
 
 server.listen(process.env.PORT, (err) => {
   if (err) throw new Error(err);

@@ -14,6 +14,12 @@ class UserController {
     let respuesta = await userDA.login(email, password);
     return res.status(respuesta.status).json(respuesta);
   }
+
+  async renewToken(req = request, res = response) {
+    const uid = req.uid;
+    const respuesta = await userDA.renovarToken(uid);
+    return res.json(respuesta);
+  }
 }
 
 module.exports = UserController.prototype;

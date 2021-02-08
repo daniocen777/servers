@@ -1,4 +1,4 @@
-const { validationResult } = require("express-validator");
+// const { validationResult } = require("express-validator");
 const bcrypt = require("bcryptjs");
 
 const Usuario = require("../models/usuario");
@@ -40,7 +40,7 @@ class UserDataAccess {
     try {
       const usuarioDB = await Usuario.findOne({ email: email });
       if (!usuarioDB) {
-        return funciones.responderError("Email no encontrado", 404, email);
+        return funciones.responderError("Email no encontrado", 404);
       }
       // Validar el password
       const validPassword = bcrypt.compareSync(password, usuarioDB.password);
@@ -53,6 +53,38 @@ class UserDataAccess {
         usuario: usuarioDB,
         token,
       });
+    } catch (error) {
+      return funciones.responderError("Error de servidor", 500, error);
+    }
+  }
+
+  async renovarToken(uid) {
+    const nuevoToken = await funciones.generarJWT(uid);
+    try {
+      const usuario = await Usuario.findById(uid);
+      if (!usuario) {
+        return funciones.responderError("Usuario no encontrado");
+      }
+      return funciones.responderOK("Token ronovado", 200, {
+        usuario,
+        token: nuevoToken,
+      });
+    } catch (error) {
+      return funciones.responderError("Error al renovar token", error);
+    }
+  }
+
+  /* Lista de usuarios (no mostrar los datos del que lo está pediendo) */
+  async getUsuarios(uid, desde) {
+    try {
+      const pagina = Number(desde) || 0;
+      // Ordenando descendentemente por los que están conectados
+      // $ne => No exixst
+      const usuarios = await Usuario.find({ _id: { $ne: uid } })
+        .sort("-online")
+        .skip(pagina)
+        .limit(20);
+      return funciones.responderOK("Lista de usuarios", 200, usuarios);
     } catch (error) {
       return funciones.responderError("Error de servidor", 500, error);
     }

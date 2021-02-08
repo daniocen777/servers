@@ -41,6 +41,16 @@ class Funciones {
     });
   }
 
+  comprobarJWT(token = "") {
+    try {
+      // Extaer uid
+      const { uid } = jwt.verify(token, process.env.JWT_KEY);
+      return [true, uid];
+    } catch (error) {
+      return [false, null];
+    }
+  }
+
   responderError(texto, status, obj = null) {
     return {
       ok: false,
