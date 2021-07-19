@@ -1,3 +1,5 @@
+const jwt = require("jsonwebtoken");
+
 class Funciones {
   getFechaHoyTexto() {
     var today = new Date();
@@ -19,9 +21,9 @@ class Funciones {
     return fecha;
   }
 
- /*  generarJWT(uid) {
+  generarJWT(uid = "") {
     return new Promise((resolve, reject) => {
-      const payload = { uid };
+      const payload = { uid }; // Sólo guardar el uid del usuario
       jwt.sign(
         payload,
         process.env.JWT_KEY,
@@ -37,7 +39,7 @@ class Funciones {
         }
       );
     });
-  } */
+  }
 
   /* comprobarJWT(token = "") {
     try {
@@ -49,12 +51,19 @@ class Funciones {
     }
   } */
 
+  /* Obtener los datos de un jwt */
+  parseJwt(token) {
+    var base64Url = token.split(".")[1];
+    var base64 = base64Url.replace("-", "+").replace("_", "/");
+    return JSON.parse(window.atob(base64));
+  }
+
   responderError(texto, status, obj = null) {
     return {
       ok: false,
       msj: texto,
       status,
-      obj: obj,
+      obj,
     };
   }
 
@@ -63,7 +72,7 @@ class Funciones {
       ok: true,
       msj: texto,
       status,
-      obj: obj,
+      obj,
     };
   }
 }

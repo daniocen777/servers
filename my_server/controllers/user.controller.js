@@ -30,6 +30,8 @@ class UserController {
 
   async eliminarUsuario(req = request, res = response) {
     const { id } = req.params;
+    // usuario que viene de middleware  "validar_token"
+    // const usuarioAutenticado = req.usuario;
     let result = await userDataAccess.eliminarUsuario(id);
     return res.status(result.status).json(result);
   }
