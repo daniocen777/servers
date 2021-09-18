@@ -13,6 +13,7 @@ const {
   validEmail,
   validUserForId,
 } = require("../helpers/db_validators");
+
 const userController = require("../controllers/user.controller");
 
 const router = Router();
@@ -34,7 +35,7 @@ router.post(
     check("correo", "El correo no es válido").isEmail(),
     /* check("rol", "No es un rol permitido").isIn(["ADMIN_ROLE", "USER_ROLE"]), */
     /* Validar rol contra la BD: Crear una colección en la BD (roles) */
-    check("rol").custom(validEmail),
+    check("correo").custom(validEmail),
     //  check("rol").custom( (rol) => validRole(rol))
     check("rol").custom(validRole),
     validarCampos,

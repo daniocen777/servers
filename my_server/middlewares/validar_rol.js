@@ -11,7 +11,7 @@ const adminRol = (req = request, res = response, next) => {
   if (rol !== "ADMIN_ROLE") {
     return res
       .status(401)
-      .json({ msg: `${nombre} no tiene permiso para eliminar usuarios` });
+      .json({ msg: `${nombre} no tiene permisos suficientes` });
   }
   next();
 };
